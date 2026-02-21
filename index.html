@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> love ❤️ My Forever</title>
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:black;
+color:white;
+overflow:hidden;
+text-align:center;
+}
+
+.page{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+transition:1s;
+opacity:0;
+pointer-events:none;
+}
+
+.show{
+opacity:1;
+pointer-events:auto;
+}
+
+button{
+padding:15px 40px;
+font-size:20px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+background:#ff2e63;
+color:white;
+transition:0.3s;
+}
+
+button:hover{transform:scale(1.1);}
+
+input{
+padding:10px;
+font-size:18px;
+border-radius:10px;
+border:none;
+}
+
+#photo{
+width:250px;
+height:250px;
+border-radius:50%;
+object-fit:cover;
+box-shadow:0 0 30px #ff2e63;
+margin-top:20px;
+}
+
+.star{
+position:fixed;
+width:2px;
+height:2px;
+background:white;
+animation:blink 2s infinite alternate;
+}
+@keyframes blink{
+from{opacity:0.2;}
+to{opacity:1;}
+}
+
+.heart{
+position:fixed;
+color:#ff2e63;
+top:-10px;
+animation:fall 5s linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(0);}
+100%{transform:translateY(100vh);}
+}
+
+#ring{
+font-size:100px;
+animation:spin 2s linear infinite;
+}
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+</style>
+</head>
+<body onclick="startMusic()">
+
+<audio id="bgMusic" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+</audio>
+
+<audio id="voice">
+<source src="voice.mp3">
+</audio>
+
+<!-- PASSWORD PAGE -->
+<div id="page0" class="page show">
+<h1>For love ❤️</h1>
+<p>Enter the special word:</p>
+<input type="password" id="pass">
+<br><br>
+<button onclick="checkPass()">Enter</button>
+</div>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+<h1>love  ❤️</h1>
+<p>You didn’t just brighten my world...  
+You became the light in my darkest days.</p>
+<button onclick="nextPage(1)">Continue ➜</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+<h1>Close Your Eyes... ✨</h1>
+<div id="count" style="font-size:80px;color:#ff2e63;">5</div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+<h1>love  💍</h1>
+<img src="C:\Users\TEST\OneDrive\Desktop\valentine\WhatsApp Image 2026-02-18 at 21.32.09.jpeg" id="photo">
+<p>
+I imagine spending my last days beside you.  
+Every single day with you is special.  
+Will you be mine forever?
+</p>
+
+<button onclick="finalLove()">Yes, Forever ❤️</button>
+<div id="finalMsg" style="margin-top:20px;font-size:28px;"></div>
+<div id="ring"></div>
+</div>
+
+<script>
+
+// stars
+for(let i=0;i<150;i++){
+let star=document.createElement("div");
+star.className="star";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*100+"vh";
+document.body.appendChild(star);
+}
+
+function startMusic(){
+document.getElementById("bgMusic").play();
+}
+
+function checkPass(){
+let password=document.getElementById("pass").value;
+if(password.toLowerCase()=="love"){
+nextPage(0);
+}
+else{
+alert("Hint: What connects us? ❤️");
+}
+}
+
+function nextPage(page){
+document.getElementById("page"+page).classList.remove("show");
+document.getElementById("page"+(page+1)).classList.add("show");
+
+if(page==1){
+startCountdown();
+}
+}
+
+function startCountdown(){
+let count=5;
+let interval=setInterval(()=>{
+count--;
+document.getElementById("count").innerHTML=count;
+if(count==0){
+clearInterval(interval);
+nextPage(2);
+}
+},1000);
+}
+
+function finalLove(){
+document.getElementById("voice").play();
+document.getElementById("ring").innerHTML="💍";
+document.getElementById("finalMsg").innerHTML=
+"You just made me the happiest man alive, love ❤️✨";
+
+fireworks();
+heartRain();
+}
+
+function heartRain(){
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+20)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove();},5000);
+},300);
+}
+
+function fireworks(){
+for(let i=0;i<120;i++){
+let fire=document.createElement("div");
+fire.style.position="fixed";
+fire.style.width="6px";
+fire.style.height="6px";
+fire.style.background="gold";
+fire.style.left="50%";
+fire.style.top="50%";
+fire.style.borderRadius="50%";
+fire.style.transform=`translate(${Math.random()*800-400}px,${Math.random()*800-400}px)`;
+fire.style.transition="1s";
+document.body.appendChild(fire);
+setTimeout(()=>{fire.remove();},1000);
+}
+}
+</script>
+
+</body>
+</html>
